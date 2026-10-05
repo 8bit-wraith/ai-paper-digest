@@ -1,2 +1,4 @@
-cd /home/lxb/Disk_SSD/projects/ai-paper-digest
-uv run /home/lxb/Disk_SSD/projects/ai-paper-dige/flask_server.py
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+exec "${AI_PAPER_PYTHON:-$ROOT/.venv-viewer/bin/python}" "$ROOT/flask_server.py"

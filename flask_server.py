@@ -5,7 +5,9 @@ import json
 app = Flask(__name__, static_folder="static")
 
 # Directory for storing user data
-USER_DATA_PATH = "/home/lxb/Disk_SSD/projects/ai-paper-digest/user_data"
+USER_DATA_PATH = os.environ.get(
+    "AI_PAPER_DATA_DIR", os.path.join(os.path.dirname(os.path.abspath(__file__)), "user_data")
+)
 os.makedirs(USER_DATA_PATH, exist_ok=True)
 
 # Files for storing data
@@ -173,4 +175,8 @@ def unread():
     return jsonify({"message": "Paper marked as unread"})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8082, debug=True)
+    app.run(
+        host=os.environ.get("AI_PAPER_HOST", "127.0.0.1"),
+        port=int(os.environ.get("AI_PAPER_PORT", "8082")),
+        debug=os.environ.get("AI_PAPER_DEBUG", "0") == "1",
+    )
